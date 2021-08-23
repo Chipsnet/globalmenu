@@ -82,7 +82,7 @@
             };
 
             function getLinkHtml(category) {
-                let html = `<a class="menu" target="_parent" href="#" onclick="defaultMenu()">◀戻る</a>`;
+                let html = `<a class="menu" href="#" onclick="defaultMenu()">◀戻る</a>`;
 
                 list[category].forEach(function (item) {
                     html += `<a href="${item.url}" target="_parent" class="menu">${item.name}</a>`;
