@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+        <style>
+            nav {
+                display: flex;
+                background-color: rgb(240, 240, 240);
+                line-height: 2.5em;
+                padding: 0 1.5em;
+                font-size: 0.8em;
+            }
+
+            body {
+                margin: 0;
+                padding: 0;
+                overflow: hidden;
+            }
+
+            .title {
+                margin: 0 20px;
+            }
+
+            .menu {
+                margin: 0 10px;
+                color: rgb(19, 19, 19);
+                text-decoration: none;
+                border-top: 0.2em solid #ccc;
+                transition: 0.5s;
+            }
+
+            .active {
+                border-top: 0.2em solid rgb(149, 228, 191);
+            }
+
+            .menu:hover {
+                border-top: 0.2em solid rgb(149, 228, 191);
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+        </nav>
+
+        <script>
+            const activeMenu = location.hash;
+
+            const list = {
+                projects: [
+                    {
+                        name: "限界大会",
+                        url: "https://genkai.work",
+                    },
+                    {
+                        name: "TokyoUnderground",
+                        url: "https://tokyounderground.net",
+                    },
+                ],
+                default: [
+                    {
+                        name: "お知らせ",
+                        id: "info",
+                        url: ""
+                    },
+                    {
+                        name: "Projects▼",
+                        id: "projects",
+                        url: "#"
+                    },
+                    {
+                        name: "Software▼",
+                        id: "software",
+                        url: "#"
+                    }
+                ]
+            };
+
+            function getLinkHtml(category) {
+                let html = `<a class="menu" href="#" onclick="defaultMenu()">◀戻る</a>`;
+
+                list[category].forEach(function (item) {
+                    html += `<a href="${item.url}" class="menu">${item.name}</a>`;
+                });
+
+                return html;
+            }
+
+            function defaultMenu() {
+                let html = "";
+
+                list.default.forEach(function (item) {
+                    if ("#" + item.id === activeMenu && item.url !== "#") {
+                        html += `<a class="menu active" href="${item.url}">${item.name}</a>`;
+                    } else if ("#" + item.id === activeMenu && item.url == "#") {
+                        html += `<a class="menu active" href="#" onclick="toggleMenu('${item.id}')">${item.name}</a>`;
+                    } else if ("#" + item.id !== activeMenu && item.url !== "#") {
+                        html += `<a class="menu" href="${item.url}">${item.name}</a>`;
+                    } else if ("#" + item.id !== activeMenu && item.url == "#") {
+                        html += `<a class="menu" href="#" onclick="toggleMenu('${item.id}')">${item.name}</a>`;
+                    }
+                });
+
+                $("nav").html(html);
+            }
+
+            function toggleMenu(category) {
+                let html = getLinkHtml(category);
+
+                $("nav").html(html);
+            }
+
+            defaultMenu();
+        </script>
+    </body>
+</html>
